@@ -1,6 +1,8 @@
 package ru.sbt.task1;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.HashMap;
 
 /**
  * Ваша задача написать загрузчик плагинов в вашу систему. Допустим вы пишите свой браузер и хотите,
@@ -13,14 +15,19 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  * PluginManager ищет скомпилированные классы плагина в папке pluginRootDirectory\pluginName\
  */
 public class PluginManager {
-    private final String pluginRootDirectory;
+    private final String pluginRootDirectory ;
+    java.util.Map <String , URLClassLoader > classLoaderMap = new HashMap<>(  );
 
     public PluginManager( String pluginRootDirectory ) {
         this.pluginRootDirectory = pluginRootDirectory;
     }
 
     public Plugin load( String pluginName, String pluginClassName ) {
-        //todo
-        throw new NotImplementedException();
+        if ( !classLoaderMap.containsKey( pluginName )){
+            URL url = new URL(  pluginRootDirectory +"/"+ pluginName );
+            classLoaderMap.put( pluginName,
+                    new URLClassLoader( new URL[] {url} )
+            );
+        }
     }
 }
