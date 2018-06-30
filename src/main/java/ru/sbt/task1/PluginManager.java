@@ -27,6 +27,7 @@ public class PluginManager {
             URL url = new URL(  pluginRootDirectory +"/"+ pluginName );
             classLoaderMap.put( pluginName,
                     new URLClassLoader( new URL[] {url} )
+                    //
             );
         }
     }
